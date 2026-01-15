@@ -28,11 +28,11 @@ const XboxBootAnimation = ({ onComplete }) => {
       if (phase === 0) {
         // Forming phase (0-2s)
         const progress = Math.min(elapsed / 2000, 1);
-        const radius = 100 * progress;
+        const radius = Math.max(100 * progress, 1);
         const opacity = progress;
 
         // Draw green orb with glow
-        const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, radius);
+        const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, Math.max(radius * 2, 1));
         gradient.addColorStop(0, `rgba(0, 255, 0, ${opacity})`);
         gradient.addColorStop(0.5, `rgba(0, 200, 0, ${opacity * 0.7})`);
         gradient.addColorStop(1, `rgba(0, 255, 0, 0)`);
@@ -45,7 +45,7 @@ const XboxBootAnimation = ({ onComplete }) => {
         // Core
         ctx.fillStyle = `rgba(0, 255, 0, ${opacity})`;
         ctx.beginPath();
-        ctx.arc(centerX, centerY, radius * 0.5, 0, Math.PI * 2);
+        ctx.arc(centerX, centerY, Math.max(radius * 0.5, 1), 0, Math.PI * 2);
         ctx.fill();
 
         if (progress >= 1) {
@@ -59,7 +59,7 @@ const XboxBootAnimation = ({ onComplete }) => {
         const radius = 100 * pulseScale;
 
         // Draw pulsing orb
-        const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, radius);
+        const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, Math.max(radius * 2, 1));
         gradient.addColorStop(0, 'rgba(0, 255, 0, 1)');
         gradient.addColorStop(0.5, 'rgba(0, 200, 0, 0.7)');
         gradient.addColorStop(1, 'rgba(0, 255, 0, 0)');
@@ -72,7 +72,7 @@ const XboxBootAnimation = ({ onComplete }) => {
         // Core
         ctx.fillStyle = 'rgba(0, 255, 0, 1)';
         ctx.beginPath();
-        ctx.arc(centerX, centerY, radius * 0.5, 0, Math.PI * 2);
+        ctx.arc(centerX, centerY, Math.max(radius * 0.5, 1), 0, Math.PI * 2);
         ctx.fill();
 
         if (progress >= 1) {
@@ -85,22 +85,24 @@ const XboxBootAnimation = ({ onComplete }) => {
         const opacity = Math.max(1 - progress, 0);
         const radius = 100;
 
-        const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, radius);
-        gradient.addColorStop(0, `rgba(0, 255, 0, ${opacity})`);
-        gradient.addColorStop(0.5, `rgba(0, 200, 0, ${opacity * 0.7})`);
-        gradient.addColorStop(1, `rgba(0, 255, 0, 0)`);
+        if (opacity > 0) {
+          const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, Math.max(radius * 2, 1));
+          gradient.addColorStop(0, `rgba(0, 255, 0, ${opacity})`);
+          gradient.addColorStop(0.5, `rgba(0, 200, 0, ${opacity * 0.7})`);
+          gradient.addColorStop(1, `rgba(0, 255, 0, 0)`);
 
-        ctx.fillStyle = gradient;
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, radius * 2, 0, Math.PI * 2);
-        ctx.fill();
+          ctx.fillStyle = gradient;
+          ctx.beginPath();
+          ctx.arc(centerX, centerY, radius * 2, 0, Math.PI * 2);
+          ctx.fill();
 
-        ctx.fillStyle = `rgba(0, 255, 0, ${opacity})`;
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, radius * 0.5, 0, Math.PI * 2);
-        ctx.fill();
+          ctx.fillStyle = `rgba(0, 255, 0, ${opacity})`;
+          ctx.beginPath();
+          ctx.arc(centerX, centerY, Math.max(radius * 0.5, 1), 0, Math.PI * 2);
+          ctx.fill();
+        }
 
-        if (opacity <= 0) {
+        if (progress >= 1) {
           setShowPressStart(true);
           cancelAnimationFrame(animationFrame);
           return;
@@ -112,7 +114,11 @@ const XboxBootAnimation = ({ onComplete }) => {
 
     animationFrame = requestAnimationFrame(drawOrb);
 
-    return () => cancelAnimationFrame(animationFrame);
+    return () => {
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame);
+      }
+    };
   }, []);
 
   return (
