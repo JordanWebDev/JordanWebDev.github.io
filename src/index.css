@@ -1,19 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  font-family: 'Orbitron', system-ui, sans-serif;
-  color-scheme: dark;
-}
-
+/* Optional: Set a global dark background so it doesn't flash white on reload */
 body {
+  background-color: #1A1D23;
+  /* matches 'halo-dark' */
+  color: #e6ffe6;
+  /* matches 'xbox-light' */
+  font-family: 'Orbitron', sans-serif;
+  /* sets default font */
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
   overflow-x: hidden;
-  background-color: #1A1D23;
-  color: #FFFFFF;
+}
+
+:root {
+  font-family: 'Orbitron', system-ui, sans-serif;
+  color-scheme: dark;
 }
 
 * {
@@ -43,3 +50,316 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Line clamp utility */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ============================================
+   ORIGINAL XBOX DESIGN SYSTEM
+   ============================================ */
+
+/* Xbox Angular Card - Signature angled corners */
+.xbox-card {
+  --corner-cut: 16px;
+  position: relative;
+  background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+  border: 1px solid rgba(16, 124, 16, 0.4);
+  clip-path: polygon(var(--corner-cut) 0%,
+      100% 0%,
+      100% calc(100% - var(--corner-cut)),
+      calc(100% - var(--corner-cut)) 100%,
+      0% 100%,
+      0% var(--corner-cut));
+  transition: all 0.3s ease;
+}
+
+.xbox-card:hover {
+  border-color: rgba(16, 124, 16, 0.8);
+  box-shadow:
+    0 0 20px rgba(16, 124, 16, 0.3),
+    inset 0 0 30px rgba(16, 124, 16, 0.1);
+}
+
+/* Xbox Button - Blade-style buttons */
+.btn-xbox {
+  --corner-size: 10px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 2rem;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #fff;
+  background: linear-gradient(135deg, #107c10 0%, #0e6b0e 100%);
+  border: none;
+  clip-path: polygon(var(--corner-size) 0%,
+      100% 0%,
+      100% calc(100% - var(--corner-size)),
+      calc(100% - var(--corner-size)) 100%,
+      0% 100%,
+      0% var(--corner-size));
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-xbox:hover {
+  background: linear-gradient(135deg, #4fba4f 0%, #107c10 100%);
+  box-shadow: 0 0 30px rgba(16, 124, 16, 0.6);
+  transform: scale(1.02);
+}
+
+.btn-xbox:active {
+  transform: scale(0.98);
+}
+
+/* Xbox Button Outline Variant */
+.btn-xbox-outline {
+  --corner-size: 10px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 2rem;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #107c10;
+  background: transparent;
+  border: 2px solid #107c10;
+  clip-path: polygon(var(--corner-size) 0%,
+      100% 0%,
+      100% calc(100% - var(--corner-size)),
+      calc(100% - var(--corner-size)) 100%,
+      0% 100%,
+      0% var(--corner-size));
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-xbox-outline:hover {
+  background: #107c10;
+  color: #fff;
+  box-shadow: 0 0 25px rgba(16, 124, 16, 0.5);
+}
+
+/* Xbox Glow Effect */
+.xbox-glow {
+  box-shadow: 0 0 20px rgba(16, 124, 16, 0.5);
+}
+
+.xbox-glow-intense {
+  box-shadow:
+    0 0 20px rgba(16, 124, 16, 0.6),
+    0 0 40px rgba(16, 124, 16, 0.4),
+    0 0 60px rgba(16, 124, 16, 0.2);
+}
+
+/* Blade Navigation Styling */
+.blade-nav-item {
+  position: relative;
+  padding: 0.5rem 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.blade-nav-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 0;
+  background: #107c10;
+  box-shadow: 0 0 10px #107c10;
+  transition: height 0.3s ease;
+}
+
+.blade-nav-item:hover::before,
+.blade-nav-item.active::before {
+  height: 100%;
+}
+
+.blade-nav-item:hover {
+  text-shadow: 0 0 10px rgba(16, 124, 16, 0.8);
+}
+
+/* Xbox Text Glow */
+.xbox-text-glow {
+  text-shadow: 0 0 10px rgba(16, 124, 16, 0.8);
+}
+
+/* Xbox Border Glow */
+.xbox-border-glow {
+  border-color: #107c10;
+  box-shadow: 0 0 15px rgba(16, 124, 16, 0.4);
+}
+
+/* ============================================
+   OG XBOX DASHBOARD DESIGN SYSTEM
+   ============================================ */
+
+/* Wireframe Grid Background */
+.xbox-grid-bg {
+  position: relative;
+  background: radial-gradient(ellipse at 25% 50%, rgba(27, 94, 32, 0.4) 0%, transparent 50%),
+    linear-gradient(to bottom, #0a0a0a 0%, #0d0d0d 100%);
+  overflow: hidden;
+}
+
+.xbox-grid-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(27, 94, 32, 0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(27, 94, 32, 0.15) 1px, transparent 1px);
+  background-size: 40px 40px;
+  transform: perspective(500px) rotateX(60deg);
+  transform-origin: center 120%;
+  pointer-events: none;
+}
+
+.xbox-grid-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 25% 50%, rgba(139, 195, 74, 0.1) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+/* Glowing Orb Container */
+.xbox-orb {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, #c6ff00 0%, #8bc34a 40%, #2e7d32 70%, #1b5e20 100%);
+  box-shadow:
+    0 0 60px rgba(139, 195, 74, 0.6),
+    0 0 120px rgba(139, 195, 74, 0.3),
+    inset 0 0 60px rgba(198, 255, 0, 0.3);
+  animation: orb-pulse 3s ease-in-out infinite;
+}
+
+.xbox-orb::before {
+  content: '';
+  position: absolute;
+  inset: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.4) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+@keyframes orb-pulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 60px rgba(139, 195, 74, 0.6), 0 0 120px rgba(139, 195, 74, 0.3);
+    transform: scale(1);
+  }
+
+  50% {
+    box-shadow: 0 0 80px rgba(139, 195, 74, 0.8), 0 0 160px rgba(139, 195, 74, 0.4);
+    transform: scale(1.02);
+  }
+}
+
+/* Horizontal Bar Button (OG Xbox Style) */
+.xbox-bar-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 200px;
+  padding: 0.75rem 1.5rem 0.75rem 2rem;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #8bc34a;
+  background: linear-gradient(90deg, rgba(51, 105, 30, 0.8) 0%, rgba(27, 61, 15, 0.6) 100%);
+  border: 1px solid rgba(139, 195, 74, 0.3);
+  clip-path: polygon(20px 0, 100% 0, 100% 100%, 0 100%, 0 20px);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.xbox-bar-btn:hover {
+  background: linear-gradient(90deg, rgba(139, 195, 74, 0.3) 0%, rgba(51, 105, 30, 0.6) 100%);
+  border-color: rgba(139, 195, 74, 0.6);
+  color: #c6ff00;
+  text-shadow: 0 0 10px rgba(198, 255, 0, 0.8);
+}
+
+.xbox-bar-btn.selected {
+  background: linear-gradient(90deg, #cddc39 0%, #8bc34a 100%);
+  border-color: #cddc39;
+  color: #0d0d0d;
+  box-shadow: 0 0 30px rgba(205, 220, 57, 0.6);
+  text-shadow: none;
+}
+
+/* Connector Circle */
+.xbox-connector {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, #8bc34a 0%, #33691e 70%, #1b3d0f 100%);
+  border: 2px solid rgba(139, 195, 74, 0.5);
+  box-shadow: 0 0 15px rgba(139, 195, 74, 0.4);
+}
+
+.xbox-connector.active {
+  background: radial-gradient(circle at 40% 40%, #c6ff00 0%, #8bc34a 70%, #33691e 100%);
+  box-shadow: 0 0 25px rgba(198, 255, 0, 0.6);
+}
+
+/* Connector Line */
+.xbox-connector-line {
+  height: 2px;
+  background: linear-gradient(90deg, rgba(139, 195, 74, 0.6) 0%, rgba(139, 195, 74, 0.2) 100%);
+  box-shadow: 0 0 10px rgba(139, 195, 74, 0.3);
+}
+
+/* Controller Button Prompt */
+.xbox-btn-prompt {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(139, 195, 74, 0.8);
+}
+
+.xbox-btn-prompt .btn-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #33691e 0%, #1b3d0f 100%);
+  border: 2px solid #8bc34a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: #8bc34a;
+  box-shadow: 0 0 10px rgba(139, 195, 74, 0.3);
+}
+
+/* Dashboard Menu Container */
+.xbox-dashboard-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
